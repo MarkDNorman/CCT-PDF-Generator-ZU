@@ -8,3 +8,5 @@ __pycache__/
 # See Data/ handling note before sharing this repo.
 generator/output/
 generator/output_samples/
+Data/CTT Data Set - Master .csv
+Data/Unit Data  - Cleaned Events.csv
