@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Uniquely ZU Transcript</title>
+    <style>
+        /* ===== Fonts ===== */
+        @font-face {
+            font-family: "Gotham";
+            src: url("file://{{ assets_path }}/Gotham/Gotham-Book.otf") format("opentype");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url("file://{{ assets_path }}/Gotham/Gotham-Medium.otf") format("opentype");
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url("file://{{ assets_path }}/Gotham/Gotham-Bold.otf") format("opentype");
+            font-weight: 600;
+            /* Mapping Bold to 600/700 range usually */
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url("file://{{ assets_path }}/Gotham/Gotham-Bold.otf") format("opentype");
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url("file://{{ assets_path }}/Gotham/Gotham-Black.otf") format("opentype");
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "TheSansArabic-Bold";
+            src: url("file://{{ assets_path }}/TheSansArabic-Bold.otf") format("opentype");
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* ===== Page & print ===== */
+        @page {
+            size: A4;
+            margin: 0;
+            /* Remove margins to eliminate grey frame */
+            background: #F4F4F4;
+        }
+
+        @page body_page {
+            margin-top: 25mm;
+            margin-bottom: 20mm;
+            background: #F4F4F4;
+        }
+
+        /* ===== Base ===== */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #F4F4F4;
+            color: #121212;
+        }
+
+        body {
+            font-family: "Gotham", "Avenir Next", "Avenir", "Futura", "Montserrat", "Helvetica Neue", Helvetica,
+                Arial, sans-serif;
+            font-size: 15px;
+            line-height: 1.55;
+            position: relative;
+            font-weight: 400;
+        }
+
+        /* ===== TITLE PAGE ===== */
+        .title-page {
+            background: #F4F4F4;
+            display: block;
+            padding: 22mm 22mm 18mm 22mm;
+            text-align: left;
+            page-break-after: always;
+            position: relative;
+            height: calc(297mm - 40mm);
+            /* A4 height minus padding */
+        }
+
+        .title-decorative-q {
+            position: absolute;
+            bottom: 30mm;
+            /* Adjust this value to move Up (positive/larger) or Down (negative/smaller) */
+            right: -15mm;
+            width: 720px;
+            /* Increased 20% */
+            height: auto;
+            opacity: 0.20;
+            z-index: 0;
+        }
+
+        .title-footer-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            /* Increased height */
+            background: #98002e;
+            /* Updated color */
+            /* Red line at bottom */
+            z-index: 1;
+        }
+
+        .title-logos {
+            margin-bottom: 22mm;
+        }
+
+        .title-main-heading {
+            font-size: 50px;
+            /* Bigger for prominence */
+            font-weight: 900 !important;
+            color: #98002e;
+            margin: 0 0 8mm 0;
+            line-height: 1.1;
+            font-family: "Gotham", "Gotham Black", "Avenir Next", sans-serif !important;
+            white-space: nowrap;
+            /* Keep on one line */
+        }
+
+        .title-semester {
+            font-size: 38px;
+            /* Increased 20% */
+            font-weight: 600;
+            color: #6E6E6E;
+            margin: 0 0 8mm 0;
+        }
+
+        .title-student-info {
+            font-size: 22px;
+            /* Increased 20% */
+            color: #888;
+            line-height: 1.8;
+            z-index: 1;
+            margin-top: 0;
+        }
+
+        /* ===== INFO PAGE ===== */
+        .capabilities-section {
+            page: body_page;
+        }
+
+        .info-page {
+            background: #F4F4F4;
+            padding: 18mm 22mm 15mm;
+            page-break-after: always;
+        }
+
+        .info-page h1 {
+            font-size: 34px;
+            /* Bigger */
+            color: #6E6E6E;
+            font-weight: 900 !important;
+            margin-bottom: 6mm;
+            /* Tighter spacing */
+            text-align: left;
+            /* Left align */
+            white-space: normal;
+            /* Allow wrap if needed */
+        }
+
+        .info-page h2 {
+            font-size: 18px;
+            /* Bigger */
+            color: #98002e;
+            font-weight: 900;
+            margin: 7mm 0 4mm;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-page p {
+            font-size: 12px;
+            /* Bigger */
+            line-height: 1.55;
+            color: #444;
+            margin-bottom: 4px;
+        }
+
+        .benefits-title-icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        /* Two-column grid for Benefits */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5mm 10mm;
+            margin: 5mm 0;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        .benefit-text {
+            flex: 1;
+            font-size: 11px;
+            /* Slightly bigger */
+            line-height: 1.5;
+        }
+
+        .benefit-text strong {
+            color: #98002e;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* Two-column layout for "How to Use" + Sidebar */
+        .usage-sidebar-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 10mm;
+            margin: 6mm 0 0;
+        }
+
+        .usage-column {
+            flex: 1;
+        }
+
+        .usage-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .usage-item {
+            display: flex;
+            gap: 12px;
+            /* Increased gap */
+            align-items: center;
+            /* Center vertically with text block */
+            margin-bottom: 8px;
+            /* Slightly more breathing room */
+        }
+
+        .usage-icon {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            object-fit: contain;
+            /* Prevents warping/flattening */
+        }
+
+        .usage-text {
+            flex: 1;
+            font-size: 11px;
+            /* Bigger */
+            line-height: 1.5;
+        }
+
+        .usage-text strong {
+            color: #98002e;
+            font-weight: 700;
+        }
+
+        .info-sidebar {
+            background: #F3ECE6;
+            color: #98002e;
+            border-left: none;
+            border-radius: 12px 0 0 12px;
+            padding: 25px;
+            /* Balanced padding */
+            margin-right: -22mm;
+            font-size: 16px;
+            /* Increased font size */
+            line-height: 1.5;
+            position: relative;
+            box-shadow: -4px 4px 8px rgba(122, 31, 61, 0.2);
+            /* Flex layout for vertical centering of the text block */
+            display: flex;
+            align-items: center;
+            /* Vertical center */
+            /* Removed flex-direction/gap so text fills width */
+            text-align: left;
+        }
+
+        .sidebar-icon {
+            width: 55px;
+            /* Slightly bigger */
+            height: 55px;
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            /* Top-right corner */
+            margin: 0;
+        }
+
+        /* Arabic Info Page Overrides */
+        .info-page.arabic {
+            direction: rtl;
+            text-align: right;
+            font-family: "TheSansArabic-Bold", "Geeza Pro", "Arial", sans-serif;
+        }
+
+        .info-page.arabic h1,
+        .info-page.arabic h2 {
+            text-align: right;
+        }
+
+        .info-page.arabic .benefits-grid {
+            direction: ltr;
+            grid-auto-flow: dense;
+        }
+
+        .info-page.arabic .benefit-item {
+            direction: rtl;
+        }
+
+        .info-page.arabic .benefit-item:nth-child(odd) {
+            grid-column: 2;
+        }
+
+        .info-page.arabic .benefit-item:nth-child(even) {
+            grid-column: 1;
+        }
+
+        /* Fix Grid Layout for Arabic: Force LTR to control column placement manually */
+        .info-page.arabic .usage-sidebar-grid {
+            direction: ltr;
+            grid-template-columns: 1fr 1.5fr;
+            /* Sidebar(Left), Usage(Right) */
+        }
+
+        .info-page.arabic .usage-column {
+            order: 2;
+            /* Place on Right */
+            direction: rtl;
+            /* Restore RTL text */
+        }
+
+        .info-page.arabic .info-sidebar {
+            order: 1;
+            /* Place on Left */
+            direction: rtl;
+            /* Restore RTL text */
+            margin-right: 0;
+            margin-left: -22mm;
+            /* Pull to left edge */
+            border-radius: 0 12px 12px 0;
+            box-shadow: 4px 4px 8px rgba(122, 31, 61, 0.2);
+            padding: 25px;
+            /* Balanced */
+            text-align: right;
+        }
+
+        .info-page.arabic .sidebar-icon {
+            right: auto;
+            left: 14px;
+        }
+
+        /* ===== OVERVIEW PAGE ===== */
+        .overview-page {
+            background: #F4F4F4;
+            padding: 28mm 22mm 15mm;
+            /* Change first value (28mm) to shift page DOWN/UP */
+            page-break-after: always;
+        }
+
+        .overview-page h1 {
+            font-size: 32px;
+            color: #98002e;
+            font-weight: 900 !important;
+            margin: 0;
+            text-align: left;
+            margin-top: -6mm;
+        }
+
+        .overview-page-title-row {
+            margin-bottom: 3mm;
+            margin-top: 1mm;
+        }
+
+        /* Container for logos aligned to right */
+        .overview-logo-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 4mm;
+        }
+
+        .overview-header-logos .brandbar {
+            width: auto;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+
+        .overview-header-logos .divider {
+            height: 40px;
+        }
+
+        .overview-header-logos .zu-logo {
+            width: 95px;
+        }
+
+        .overview-header-logos .uzu-logo {
+            height: 45px;
+            margin-left: -4px;
+        }
+
+        /* Stat intro hero section */
+        .overview-stat-intro {
+            margin-bottom: 10mm;
+            display: flex;
+            gap: 14mm;
+            align-items: center;
+        }
+
+        .overview-stat-box {
+            background: #F5EEE6;
+            border-radius: 20px;
+            padding: 2mm;
+            /* Reduced padding */
+            width: 42mm;
+            /* Smaller box */
+            height: 42mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Center content vertically */
+            align-items: center;
+            /* Center content horizontally */
+            gap: 2mm;
+            /* Space between number and icon */
+        }
+
+        .overview-stat-number {
+            font-size: 42px;
+            /* Bigger number */
+            font-weight: 900;
+            color: #98002e;
+            line-height: 1;
+        }
+
+        .overview-stat-icon {
+            width: 55px;
+            /* Bigger icon */
+            height: auto;
+            align-self: center;
+            /* Center align */
+        }
+
+        .overview-stat-text {
+            flex: 1;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .overview-stat-heading {
+            font-size: 24px;
+            /* Bigger */
+            font-weight: 900;
+            color: #4A4A4A;
+            margin: 0 0 6px;
+        }
+
+        .overview-stat-body {
+            font-size: 17px;
+            /* Bigger */
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .overview-intro-text {
+            text-align: left;
+            font-size: 14.5px;
+            /* Larger font */
+            margin: 4mm 0;
+            /* Equal top/bottom margins, tighter */
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .overview-treemap {
+            margin: -10mm 0 4mm 0;
+            /* Change first value (-10mm) to move graph UP (more negative) or DOWN */
+            text-align: center;
+        }
+
+        .overview-treemap img {
+            max-width: 100%;
+            max-height: 100mm;
+            /* Limit height */
+            border-radius: 10px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* Equal columns */
+            column-gap: 10mm;
+            margin-top: 6mm;
+            /* Reduced margin */
+            align-items: stretch;
+        }
+
+        .overview-flagship-box {
+            font-size: 11.5px;
+            /* Bump up */
+            color: #444;
+            padding-right: 10mm;
+            border-right: 2px solid #F1E5D7;
+            /* Vertical divider */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .overview-unit-box {
+            font-size: 11.5px;
+            /* Bump up */
+            color: #444;
+            padding-left: 4mm;
+            margin-left: 0;
+            border-left: none;
+            /* Removing old style */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* Push icon to bottom */
+        }
+
+        .overview-flagship-heading,
+        .overview-unit-heading {
+            margin: 0 0 8px;
+            font-size: 15px;
+            /* Larger heading */
+            font-weight: 700;
+            color: #4A4A4A;
+        }
+
+        .flagship-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 4px 0;
+            font-size: 12.5px;
+            /* Bigger */
+        }
+
+        .flagship-check-icon {
+            width: 10px;
+            height: 10px;
+            flex-shrink: 0;
+        }
+
+        .flagship-icon-placeholder {
+            width: 10px;
+            height: 10px;
+            flex-shrink: 0;
+            display: inline-block;
+        }
+
+        .overview-flagship-footnote {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #444;
+        }
+
+        .overview-flagship-footnote .underline-link {
+            text-decoration: underline;
+        }
+
+        .overview-unit-subtext {
+            margin: 4px 0 10px;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .unit-icon-card {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            /* Rounded square matching Stat box */
+            background: #F5EEE6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: flex-end;
+            /* Bottom right of column */
+            margin-top: 12px;
+        }
+
+        .unit-icon {
+            width: 52px;
+            height: auto;
+        }
+
+        .unit-text {
+            flex: 1;
+            font-size: 10px;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        /* ===== Body page titles ===== */
+        h1 {
+            margin: 8px 0 0;
+            font-size: 38px;
+            line-height: 1.05;
+            color: #6E6E6E;
+            font-weight: 900 !important;
+            letter-spacing: 0.2px;
+            font-family: "Gotham", "Gotham Black", "Avenir Next", sans-serif !important;
+        }
+
+        .kicker {
+            margin: 5px 0 15px;
+            font-size: 22px;
+            font-weight: 900 !important;
+            color: #98002e;
+            font-family: "Gotham", "Gotham Black", "Avenir Next", sans-serif !important;
+        }
+
+        /* ===== Capability cards ===== */
+        .card {
+            background: #F3ECE6;
+            border-radius: 22px;
+            padding: 15px 17px;
+            margin: 12px 0;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            page-break-inside: auto;
+            orphans: 3;
+            widows: 3;
+        }
+
+        .card-header {
+            display: table;
+            width: 100%;
+            margin-bottom: 7px;
+            page-break-after: avoid;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .card-header-row {
+            display: table-row;
+        }
+
+        .card-title-cell {
+            display: table-cell;
+            width: 60%;
+            vertical-align: bottom;
+        }
+
+        .card-title {
+            font-size: 23px;
+            font-weight: 900 !important;
+            color: #98002e;
+            margin: 0;
+            padding-bottom: 2px;
+            font-family: "Gotham", "Gotham Black", "Avenir Next", sans-serif !important;
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .level-cell {
+            display: table-cell;
+            vertical-align: bottom;
+            text-align: right;
+            padding-left: 10px;
+        }
+
+        .level {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .level-label {
+            color: #7D263F;
+            font-weight: 700;
+            font-size: 17px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .dots {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #9CA3AF;
+            display: inline-block;
+            margin-left: 7px;
+        }
+
+        .dot:first-child {
+            margin-left: 0;
+        }
+
+        .dots.fill-1 .dot:nth-child(1) {
+            background: #98002e;
+        }
+
+        .dots.fill-2 .dot:nth-child(1),
+        .dots.fill-2 .dot:nth-child(2) {
+            background: #98002e;
+        }
+
+        .dots.fill-3 .dot {
+            background: #98002e;
+        }
+
+        .rule {
+            height: 3px;
+            background: #8E8E8E;
+            opacity: 0.75;
+            border-radius: 3px;
+            margin: 7px 0 9px;
+        }
+
+        .card ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .card li {
+            margin: 7px 0;
+            position: relative;
+            page-break-inside: avoid;
+        }
+
+        .completion-date {
+            display: inline-block;
+            color: #98002e;
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 7px;
+            white-space: nowrap;
+        }
+
+        .entry-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .entry-semester {
+            color: #8E8E8E;
+            font-weight: 600;
+            font-size: 11px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* ===== Header lockup ===== */
+        .brandbar {
+            display: table;
+            width: 100%;
+            padding: 10px 4px 7px;
+            margin-bottom: 8px;
+        }
+
+        .brandbar-inner {
+            display: table-row;
+        }
+
+        .zu-logo-cell,
+        .divider-cell,
+        .uzu-logo-cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .zu-logo {
+            width: 115px;
+            /* Smaller */
+            height: auto;
+            display: block;
+            margin-left: 100px;
+            margin-right: -70px;
+        }
+
+        .uzu-logo {
+            height: 55px;
+            width: auto;
+            display: block;
+            margin-left: 5px;
+            /* margin-left: 0; Reset to balance spacing */
+        }
+
+        .divider-cell {
+            width: 2px;
+            padding: 0 4px;
+            /* Adjust: Balanced spacing */
+        }
+
+        .divider {
+            width: 4px;
+            height: 60px;
+            background: #0f172a;
+            border-radius: 2px;
+            display: block;
+            margin: auto;
+            /* Center vertically */
+        }
+
+        .container {
+            max-width: 820px;
+            margin: 12px auto 20px;
+            padding: 0 22mm;
+        }
+
+        /* ===== Semester Overview Logos Independent Styling ===== */
+        .brandbar-overview {
+            display: table;
+            /* width: auto; Let it shrink fit if needed, or 100% inside flex */
+        }
+
+        .brandbar-inner-overview {
+            display: table-row;
+        }
+
+        .zu-logo-cell-overview,
+        .divider-cell-overview,
+        .uzu-logo-cell-overview {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .zu-logo-overview {
+            width: 75px;
+            height: auto;
+            display: block;
+            margin-left: 0;
+            margin-right: 0px;
+            /* Match original negative margin for ZU logo if needed, or keep 0 */
+        }
+
+        .uzu-logo-overview {
+            height: 40px;
+            width: auto;
+            display: block;
+            margin-left: 0px;
+            /* Original negative margin for Overview */
+        }
+
+        .divider-cell-overview {
+            width: 2px;
+            padding: 0 8px 0 6px;
+            /* Original wider padding for Overview */
+        }
+
+        .divider-overview {
+            width: 4px;
+            height: 60px;
+            background: #0f172a;
+            border-radius: 2px;
+            display: block;
+            margin: auto;
+        }
+
+        .combined-logo {
+            height: 120px;
+            width: auto;
+            display: block;
+            margin-left: 0px;
+        }
+
+        .combined-logo-overview {
+            height: 80px;
+            width: auto;
+            display: block;
+        }
+
+        .verification-footer {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            margin-top: 20mm;
+            page-break-inside: avoid;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== TITLE PAGE ==================== -->
+    <div class="title-page">
+        <img class="title-decorative-q" src="file://{{ assets_path }}/Large Transparent Q.png"
+            alt="Decorative graphic" />
+        <div class="title-footer-line"></div>
+
+        <div class="title-logos">
+            <div class="brandbar">
+                <img class="combined-logo" src="file://{{ assets_path }}/UZU BRANDING KIT 2.png" alt="Uniquely ZU" />
+            </div>
+        </div>
+
+        <div class="title-main-heading">Uniquely ZU Transcript</div>
+        <div class="title-semester">Spring 2026</div>
+
+        <div class="title-student-info">
+            <div>{{ student.name }}</div>
+            <div>{{ student.id }}</div>
+        </div>
+    </div>
+
+    <!-- ==================== INFO PAGE ==================== -->
+    <div class="info-page">
+        <h1>Welcome to Your Uniquely ZU Transcript!</h1>
+
+        <h2>What is Your Uniquely ZU Transcript?</h2>
+        <p>Your Transcript is the reflection of your ZU experience so far; everything you do at ZU helps you develop
+            many amazing skills at various levels. Your Transcript helps track this progress for you! It will be issued
+            once each semester, but you can revisit it anytime to reflect on the experiences you've had, the skills
+            you've developed, and the opportunities you may want to pursue next. Use it as a guide to understand your
+            growth and plan your continued journey at ZU.</p>
+
+        <h2>
+            <img class="benefits-title-icon" src="file://{{ assets_path }}/Benefits Icon.png" alt="Benefits icon" />
+            Benefits of Uniquely ZU &amp; the UZU Transcript
+        </h2>
+        <p style="margin-bottom: 4mm;">These are powerful tools designed to help you:</p>
+
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Globe Icon.png" alt="Globe icon" />
+                <div class="benefit-text">
+                    <strong>Connect your passions to real-world impact:</strong> Whether you love sports, creativity,
+                    research, innovation, leadership, or community work, UZU turns your interests into measurable
+                    capability development.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Lightbulb Icon.png" alt="Lightbulb icon" />
+                <div class="benefit-text">
+                    <strong>Be more knowledgeable:</strong> UZU helps you understand what each experience teaches you,
+                    giving clarity on the skills employers value most.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Conversations Bubble Icon.png"
+                    alt="Communication icon" />
+                <div class="benefit-text">
+                    <strong>Become more articulate:</strong> By naming and describing your capabilities, you can
+                    confidently explain your strengths in interviews, assessments, and networking conversations.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Transcript Icon.png" alt="Transcript icon" />
+                <div class="benefit-text">
+                    <strong>Build a stronger professional identity:</strong> Every activity you complete adds evidence
+                    of your growth, helping you craft a compelling personal brand.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Handshake Icon.png" alt="Handshake icon" />
+                <div class="benefit-text">
+                    <strong>Stand out to industry partners:</strong> The transcript showcases ZU students as
+                    future-ready, capable, and engaged, building a reputation for excellence across the UAE and beyond.
+                </div>
+            </div>
+        </div>
+
+        <h2>How to Use Your Uniquely ZU Transcript</h2>
+
+        <div class="usage-sidebar-grid">
+            <div class="usage-column">
+                <ul class="usage-list">
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/Clipboard-Todo List Icon.png"
+                            alt="Clipboard icon" />
+                        <div class="usage-text"><strong>Review your experiences regularly</strong> to see which
+                            capabilities you've developed through leadership roles, volunteering, campus events,
+                            challenges, and UZU-aligned programs.</div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/Magnifying Glass Icon.png"
+                            alt="Magnifying glass icon" />
+                        <div class="usage-text"><strong>Look for patterns —</strong> which capabilities are you
+                            strongest in? Which ones appear less often?</div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/CV Icon.png" alt="CV icon" />
+                        <div class="usage-text"><strong>Use your transcript as evidence</strong> when updating your CV,
+                            preparing for interviews, or applying for internships and jobs.</div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/People Icon.png" alt="People icon" />
+                        <div class="usage-text"><strong>Share your transcript</strong> with faculty, coaches, or
+                            mentors to get tailored advice on next steps for your personal and professional growth.
+                        </div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/Award Icon.png" alt="Award icon" />
+                        <div class="usage-text"><strong>Set goals for the semester</strong> by identifying which skills
+                            you want to progress from Developing → Achieving → Excelling.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-sidebar">
+                <img class="sidebar-icon" src="file://{{ assets_path }}/Megaphone Icon.png" alt="Megaphone icon" />
+                <div>
+                    There are still so many opportunities to explore at ZU and so many skills to develop. If you notice
+                    a gap in your transcript, visit the UZU Portal to see how you can turn your time at ZU into a truly
+                    transformative one!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ARABIC INFO PAGE ==================== -->
+    <div class="info-page arabic">
+        <h1>مرحبا بكم في Uniquely ZU Transcript!</h1>
+
+        <h2>ما هو Uniquely ZU Transcript؟</h2>
+        <p>هو سجل يوثّق رحلتك الأكاديمية والاجتماعية في جامعة زايد، ويجمع كل مشاركاتك وأنشطتك وإنجازاتك التي حققتها طوال
+            فترة دراستك. كل تجربة تخوضها داخل الجامعة تضيف لك مهارة جديدة وتساعدك على تطوير نفسك، وهذا السجل يمنحك صورة
+            واضحة عن هذا التقدّم خطوة بخطوة.</p>
+        <p>يتم إصدار السجل مرة واحدة في كل فصل دراسي، ويمكنك الرجوع إليه في أي وقت لمتابعة ما أنجزته، واكتشاف المهارات
+            التي اكتسبتها، والتعرّف على الفرص التي قد ترغب في استثمارها مستقبلا. يمكنك استخدامه كمرجع يساعدك على فهم
+            تطوّرك، واتخاذ قرارات أذكى، والتخطيط لمسيرتك الجامعية بثقة في جامعة زايد.</p>
+
+        <h2>
+            <img class="benefits-title-icon" src="file://{{ assets_path }}/Benefits Icon.png" alt="Benefits icon" />
+            فوائد برنامج Uniquely ZU و Uniquely ZU Transcript
+        </h2>
+        <p style="margin-bottom: 4mm;">تشكل هذه الأدوات منصة قوية مصممة لدعم تطورك الشخصي والمهني من خلال:</p>
+
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Globe Icon.png" alt="Globe icon" />
+                <div class="benefit-text">
+                    <strong>تحويل اهتماماتك إلى مهارات عملية:</strong> يقوم البرنامج بتطوير المهارات المناسبة التي تخدم
+                    اهتماماتك، حيث تتحول مشاركاتك داخل الجامعة، سواء في الأنشطة الرياضية، أو الأندية الطلابية، أو مجالات
+                    الإبداع، والبحث، والابتكار، والقيادة، أو العمل المجتمعي، إلى مهارات عملية يمكنك تطويرها ومتابعة
+                    أثرها على مسيرتك الأكاديمية والمهنية في جامعة زايد.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Lightbulb Icon.png" alt="Lightbulb icon" />
+                <div class="benefit-text">
+                    <strong>تعزيز المعرفة:</strong> يمنحك البرنامج فهما أعمق لما يضيفه كل نشاط إلى مهاراتك، ويوضح لك
+                    المهارات الأكثر طلبا لدى أصحاب العمل.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Conversations Bubble Icon.png"
+                    alt="Communication icon" />
+                <div class="benefit-text">
+                    <strong>تقوية مهارات التعبير:</strong> من خلال تحديد قدراتك ووصفها بوضوح، يمكنك عرض نقاط قوتك بثقة
+                    أثناء المقابلات والتقييمات واللقاءات المهنية.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Transcript Icon.png" alt="Transcript icon" />
+                <div class="benefit-text">
+                    <strong>بناء هوية مهنية قوية:</strong> كل مشاركة أو نشاط تقوم به يساهم في إبراز تطوّرك ويساعدك على
+                    بناء صورة مهنية تعبّر عنك بثقة.
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <img class="benefit-icon" src="file://{{ assets_path }}/Handshake Icon.png" alt="Handshake icon" />
+                <div class="benefit-text">
+                    <strong>التميز أمام قطاعات العمل:</strong> يعكس السجل صورة طلاب جامعة زايد بوصفهم كوادر مستعدة
+                    للمستقبل، قادرة وفعالة، مما يعزز سمعتك في دولة الإمارات وخارجها.
+                </div>
+            </div>
+        </div>
+
+        <h2>كيفية استخدام (Uniquely ZU Transcript)</h2>
+
+        <div class="usage-sidebar-grid">
+            <div class="usage-column">
+                <ul class="usage-list">
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/Clipboard-Todo List Icon.png"
+                            alt="Clipboard icon" />
+                        <div class="usage-text"><strong>راجع تجاربك بشكل منتظم</strong> لمعرفة القدرات التي قمت
+                            بتطويرها من خلال الأدوار القيادية، العمل التطوعي، فعاليات الحرم الجامعي، التحديات، والبرامج
+                            المرتبطة بالبرنامج.</div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/Magnifying Glass Icon.png"
+                            alt="Magnifying glass icon" />
+                        <div class="usage-text"><strong>راجع مشاركاتك المختلفة</strong> ولاحظ المهارات التي تتكرر وتظهر
+                            لديك بشكل واضح، وكذلك المهارات التي تحتاج إلى مزيد من التطوير.</div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/CV Icon.png" alt="CV icon" />
+                        <div class="usage-text"><strong>استخدم سجلك كمرجع</strong> يساعدك عند كتابة سيرتك الذاتية أو
+                            التحضير للمقابلات أو التقديم على الفرص الوظيفية، لتقديم صورة واضحة عن خبراتك، وما تعلمته،
+                            وكيف أصبحت أكثر جاهزية لمسيرتك المهنية.</div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/People Icon.png" alt="People icon" />
+                        <div class="usage-text"><strong>شارك سجلك</strong> مع أعضاء هيئة التدريس أو المدربين أو
+                            المرشدين للحصول على نصائح مخصصة تتناسب مع مسارك الشخصي والمهني.
+                        </div>
+                    </li>
+                    <li class="usage-item">
+                        <img class="usage-icon" src="file://{{ assets_path }}/Award Icon.png" alt="Award icon" />
+                        <div class="usage-text"><strong>حدد أهدافك للفصل الدراسي</strong> من خلال تحديد القدرات التي
+                            ترغب في تطويرها والارتقاء بها عبر المراحل: من "تطوير" ← "تحقيق" ← "تميز".</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-sidebar">
+                <img class="sidebar-icon" src="file://{{ assets_path }}/Megaphone Icon.png" alt="Megaphone icon" />
+                <div>
+                    ما زالت هناك فرص كثيرة بانتظارك في جامعة زايد، ومهارات متعددة يمكنك تطويرها. وفي حال لاحظت أي نقص في
+                    سجلك، تتيح لك منصة UZU اكتشاف فرص جديدة تعزز تجربتك الجامعية وتدعم نموك الشخصي والأكاديمي.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== OVERVIEW PAGE ==================== -->
+    <div class="overview-page">
+        <!-- Logo header (Right aligned) -->
+        <div class="overview-logo-container">
+            <div class="overview-header-logos">
+                <div class="brandbar-overview">
+                    <img class="combined-logo-overview" src="file://{{ assets_path }}/UZU BRANDING KIT 2.png"
+                        alt="Uniquely ZU" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Title (Left aligned below logos) -->
+        <div class="overview-page-title-row">
+            <h1>Semester Overview</h1>
+        </div>
+
+        <!-- Stat hero: big 17 card + text -->
+        <div class="overview-stat-intro">
+            <div class="overview-stat-box">
+                <div class="overview-stat-number">{{ student.total_activities }}</div>
+                <img class="overview-stat-icon" src="file://{{ assets_path }}/Calendar Icon.png" alt="Calendar icon" />
+            </div>
+
+            <div class="overview-stat-text">
+                <div class="overview-stat-heading">
+                    You attended {{ student.total_activities }} events/activities this semester!
+                </div>
+                <!-- Dynamic X replacement -->
+                <p class="overview-stat-body">
+                    Through these events/activities, you interacted with over {{ student.unique_capabilities }} UZU
+                    capabilities.
+                    Here’s a closer look:
+                </p>
+            </div>
+        </div>
+
+        <div class="overview-treemap">
+            {% if tree_graph_base64 %}
+            <img src="data:image/png;base64,{{ tree_graph_base64 }}" alt="Capability Map">
+            {% else %}
+            <img src="file://{{ tree_graph_path }}" alt="Capability Map">
+            {% endif %}
+        </div>
+
+        <p class="overview-intro-text">
+            Events introduced you to these capabilities at a foundational level, which you subsequently expanded through
+            focused capability development. Your experiences on the next page highlight this growth!
+        </p>
+
+        {# Flagship events / most-engaged-unit sections are disabled for this iteration of the
+           transcript. The underlying data (student.flagship_events_*, student.attended_*,
+           student.top_host_*) is still computed in generate_transcripts.py, so this section can
+           be brought back by flipping show_engagement_details to True. #}
+        {% set show_engagement_details = False %}
+        {% if show_engagement_details %}
+        <div class="overview-grid">
+            <!-- Left column: flagship events -->
+            <div class="overview-flagship-box">
+                <p class="overview-flagship-heading">
+                    You joined
+                    <span class="highlight-maroon">
+                        {{ student.flagship_events_joined }}/{{ student.flagship_events_total }}
+                    </span>
+                    flagship Student Affairs events!
+                </p>
+
+                <ul class="flagship-list">
+                    <li class="flagship-item">
+                        {% if student.attended_national_day %}
+                        <img class="flagship-check-icon" src="file://{{ assets_path }}/CheckMark Icon.png"
+                            alt="Status" />
+                        {% else %}
+                        <span class="flagship-icon-placeholder"></span>
+                        {% endif %}
+                        <span>National Day</span>
+                    </li>
+                    <li class="flagship-item">
+                        {% if student.attended_career_fair %}
+                        <img class="flagship-check-icon" src="file://{{ assets_path }}/CheckMark Icon.png"
+                            alt="Status" />
+                        {% else %}
+                        <span class="flagship-icon-placeholder"></span>
+                        {% endif %}
+                        <span>Career Fair</span>
+                    </li>
+                    <li class="flagship-item">
+                        {% if student.attended_campus_connect %}
+                        <img class="flagship-check-icon" src="file://{{ assets_path }}/CheckMark Icon.png"
+                            alt="Status" />
+                        {% else %}
+                        <span class="flagship-icon-placeholder"></span>
+                        {% endif %}
+                        <span>UZU Campus Connect</span>
+                    </li>
+                </ul>
+
+                <p class="overview-flagship-footnote">
+                    Keep an eye out for the upcoming flagship
+                    <span class="underline-link">events</span>!
+                </p>
+            </div>
+
+            <!-- Right column: most-engaged unit -->
+            <div class="overview-unit-box">
+                <p class="overview-unit-heading">
+                    You engaged the most with
+                    <span class="highlight-maroon">{{ student.top_host_name }}</span>
+                    this semester!
+                </p>
+                <p class="overview-unit-subtext">
+                    {{ student.top_host_sentence }}
+                </p>
+
+                <div class="unit-icon-card">
+                    <!-- Replace SPORTS_ICON_PLACEHOLDER.png with your actual unit icon path -->
+                    <img class="unit-icon" src="file://{{ assets_path }}/Award Icon.png" alt="Sports unit icon" />
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- ==================== ENGAGEMENT HIGHLIGHTS (BODY PAGES) ==================== -->
+    <div class="capabilities-section">
+        <main class="container">
+
+            <!-- ===== Brand header ===== -->
+            <div class="brandbar">
+                <img class="combined-logo" src="file://{{ assets_path }}/UZU BRANDING KIT 2.png" alt="Uniquely ZU" />
+            </div>
+
+            <!-- ===== Page title ===== -->
+            <h1>Engagement Highlights</h1>
+            <div class="kicker">Skills &amp; Capabilities Explored:</div>
+
+            <!-- ===== Cards ===== -->
+            {% for capability_data in student.capabilities %}
+            {% set visible_entries = capability_data.entries | rejectattr('hidden') | list %}
+            {% if visible_entries %}
+            <section class="card">
+                <div class="card-header">
+                    <div class="card-header-row">
+                        <div class="card-title-cell">
+                            <div class="card-title">{{ capability_data.name }}</div>
+                        </div>
+                        <div class="level-cell">
+                            <div class="level">
+                                <span class="level-label">{{ capability_data.level_label }}</span>
+                                <span class="dots fill-{{ capability_data.level_score }}">
+                                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rule"></div>
+                <ul>
+                    {% for entry in visible_entries %}
+                    <li>
+                        <div class="entry-row">
+                            <span class="entry-text">
+                                {% if entry.date %}<span class="completion-date">{{ entry.date }}</span>{% endif %}{{
+                                entry.text }}
+                            </span>
+                            {% if entry.semester %}<span class="entry-semester">{{ entry.semester }}</span>{% endif %}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+            {% endfor %}
+
+            <div class="verification-footer">
+                This is a digital document securely issued by Zayed University. To verify the document please visit <a
+                    href="https://verify.zu.ac.ae/">https://verify.zu.ac.ae/</a>.
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>

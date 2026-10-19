@@ -1,0 +1,349 @@
+/* ==================== CSS Variables ==================== */
+:root {
+    --color-maroon: #800000;
+    --color-grey-dark: #444444;
+    --color-grey-light: #f9f9f9;
+    --color-grey-medium: #d0d0d0;
+    --color-white: #ffffff;
+}
+
+/* ==================== Page Setup ==================== */
+@page {
+    size: A4;
+    margin: 0;
+    background: var(--color-grey-light);
+}
+
+@page capabilities {
+    margin-top: 20mm;
+    margin-bottom: 20mm;
+}
+
+@page capabilities:first {
+    margin-top: 0;
+}
+
+.capabilities-section {
+    page-break-before: always;
+    page: capabilities;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    background: var(--color-grey-light);
+    color: var(--color-grey-dark);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.page {
+    position: relative;
+    width: 210mm;
+    min-height: 297mm;
+    page-break-after: always;
+    background-color: var(--color-white);
+    box-sizing: border-box;
+    padding: 20mm;
+}
+
+/* ==================== Title Page ==================== */
+.title-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--color-white);
+}
+
+.title-main {
+    font-size: 48pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.title-subtitle {
+    font-size: 24pt;
+    color: var(--color-grey-dark);
+    font-weight: 600;
+    margin-bottom: 60px;
+}
+
+.title-student-info {
+    margin-top: auto;
+    margin-bottom: 40mm;
+}
+
+.title-student-name {
+    font-size: 18pt;
+    color: var(--color-grey-dark);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.title-student-id {
+    font-size: 14pt;
+    color: var(--color-grey-dark);
+}
+
+/* ==================== Info Page ==================== */
+.info-page {
+    background: var(--color-white);
+}
+
+.info-header {
+    font-size: 32pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    margin-bottom: 20mm;
+    text-align: center;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15mm;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.info-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--color-maroon);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.info-text {
+    flex: 1;
+}
+
+.info-text strong {
+    color: var(--color-maroon);
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* ==================== Overview Page ==================== */
+.overview-page {
+    background: var(--color-white);
+}
+
+.overview-title {
+    font-size: 32pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    margin-bottom: 15mm;
+    text-align: center;
+}
+
+.overview-highlights-box {
+    background: var(--color-grey-light);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 15mm;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.overview-number {
+    font-size: 60pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    line-height: 1;
+}
+
+.overview-label {
+    font-size: 14pt;
+    color: var(--color-grey-dark);
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.overview-treemap {
+    margin-bottom: 15mm;
+}
+
+.overview-treemap img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.overview-engagement {
+    background: var(--color-grey-light);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.engagement-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 14pt;
+    color: var(--color-grey-dark);
+}
+
+.engagement-item::before {
+    content: "✓";
+    color: var(--color-maroon);
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+/* ==================== Body Pages ==================== */
+.body-page {
+    background: var(--color-grey-light);
+}
+
+.body-header {
+    text-align: center;
+    margin-bottom: 20mm;
+}
+
+.body-title {
+    font-size: 32pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    margin-bottom: 8px;
+}
+
+.body-subtitle {
+    font-size: 18pt;
+    color: var(--color-grey-dark);
+    font-weight: 600;
+}
+
+/* Capability Cards */
+.capability-card {
+    background: var(--color-white);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    page-break-inside: avoid;
+}
+
+.card-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--color-grey-medium);
+}
+
+.card-capability-name {
+    font-size: 22pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    margin: 0;
+}
+
+.card-rating {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rating-label {
+    font-size: 16pt;
+    font-weight: 700;
+    color: var(--color-maroon);
+}
+
+.rating-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.rating-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-grey-medium);
+}
+
+.rating-dot.filled {
+    background: var(--color-maroon);
+}
+
+/* Activity List */
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+}
+
+.activity-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--color-grey-dark);
+}
+
+.activity-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--color-maroon);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.activity-date {
+    color: var(--color-maroon);
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+/* ==================== Back Page ==================== */
+.back-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    text-align: center;
+}
+
+.back-logo {
+    font-size: 48pt;
+    font-weight: 900;
+    color: var(--color-maroon);
+    margin-bottom: 20mm;
+    letter-spacing: 2px;
+}
+
+.back-contact {
+    font-size: 14pt;
+    color: var(--color-grey-dark);
+    line-height: 2;
+}
+
+.back-contact a {
+    color: var(--color-maroon);
+    text-decoration: none;
+}

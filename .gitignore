@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.bak
+
+# Generated output and real student data should not be committed.
+# See Data/ handling note before sharing this repo.
+generator/output/
+generator/output_samples/
